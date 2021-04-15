@@ -1,17 +1,54 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script type="text/javascript">
-    window.hfAccountId = "d77c726c-d77d-4d81-a41d-322619816e5d";
+
+<head>
+	<base target="_top">
+	<script type="text/javascript">
+		window.hfAccountId = "d77c726c-d77d-4d81-a41d-322619816e5d";
     window.hfDomain = "https://api.herefish.com";
     (function() {
         var hf = document.createElement('script'); hf.type = 'text/javascript'; hf.async = true;
         hf.src = window.hfDomain + '/scripts/hf.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(hf, s);
     })();
-</script> 
-  </head>
-  <body>
-    Hello
-  </body>
+	</script>
+      <!--External Library that allows the "posting" of messages from the page in the iFrame to "listeners" in Bullhorn -->
+    <script src="https://cdn.rawgit.com/krakenjs/post-robot/7da06445/dist/post-robot.js"></script>
+</head>
+
+<body>
+
+	<h1>Test to show user details from Parent iFrame</h1>
+	User Name: <span id="un"></span>
+	<br/> Email: <span id="em"></span>
+	<script>
+		//postRobot is the JS object instantiated to make calls to the BH app hosting the iFrame
+    postRobot.CONFIG.LOG_LEVEL = 'error';
+
+    //Register the "Post Robot" so we can make calls to BH
+    postRobot.sendToParent('register', {
+        title: 'Custom Title',
+        url: window.location.href,
+        color: 'red'
+    }).then(function (event) {
+        console.log('[No-App] - Register Complete', event);
+        var candidateId = 1234;
+        openCandidate(candidateId);
+    });
+
+function openCandidate(id){
+    //Call the "Open" listener in BH via postRobot (in BH this is called AppBridge)
+    postRobot.sendToParent('open', {
+            type: 'record', 
+            entityType: 'Candidate', 
+            entityId: id, 
+           tab: 'edit'}).then(function (userdata) {
+            //Put what you want to do with the data here...
+            console.log('[No-App] - Success', userdata);
+        });
+}
+        
+	</script>
+</body>
+
 </html>
