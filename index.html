@@ -38,14 +38,37 @@
 
 function openCandidate(id){
     //Call the "Open" listener in BH via postRobot (in BH this is called AppBridge)
-    postRobot.sendToParent('open', {
-            type: 'record', 
-            entityType: 'Candidate', 
-            entityId: id, 
-           tab: 'edit'}).then(function (userdata) {
-            //Put what you want to do with the data here...
-            console.log('[No-App] - Success', userdata);
-        });
+    postRobot.sendToParent('open', 
+			  {
+              type: 'add',
+              entityType: 'Email',
+              data: {
+                  messageType: 'normal',
+                  from: {
+                      id: 6,
+                      label: "Simon Willcox"
+                  },
+                  to: [{
+                          id: 39,
+                          toEntityType: 'Candidate',
+                          email: "si.willcox@gmail.com"
+                      }],
+                  subject: "Welcome!",
+                  message: "Auto generated message!",
+                  candidatePicker: [
+                      { id: 305},
+                  ],
+                  candidates: [
+                      { id: 305},
+                  ],
+jobOrders: [
+                      { id: 456},
+                  ]
+              }
+          }
+			  
+			  
+			  );
 }
         
 	</script>
