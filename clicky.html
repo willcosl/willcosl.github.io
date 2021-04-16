@@ -5,6 +5,29 @@
 	<base target="_top">
       <!--External Library that allows the "posting" of messages from the page in the iFrame to "listeners" in Bullhorn -->
     <script src="https://cdn.rawgit.com/krakenjs/post-robot/7da06445/dist/post-robot.js"></script>
+	<script>
+	function addResizeParameterToUrl()
+{
+    var size = document.body.scrollHeight;
+    var currentHref = decodeURIComponent(getQueryStringParameter(location.href,
+       "currentBullhornUrl").replace(/\+/g, " ")).replace(/:[0-9]+/g, "");
+    var fragment="displayHeight=" + size;
+    currentHref+="#" + fragment;
+    parent.location.href=currentHref;
+}
+function getQueryStringParameter(href, paramName)
+{
+   var regexS = "[\\?&]"+ paramName +"=([^&#]*)";
+   var regex = new RegExp( regexS );
+   var results = regex.exec( href);
+   if( results == null )
+	{
+	   return "";
+        } else {
+	   return results[1];
+	}
+}
+	</script>
 </head>
 
 <body>
