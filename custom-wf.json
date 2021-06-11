@@ -1,4 +1,4 @@
 {
   "total": 5,
-  "location": "https://www.google.com/"
+  "route": ["./activity", { "section": "tasks" }]
 }
