@@ -1,23 +1,21 @@
 {
   "total": 5,
-  //"route":"./submission/all",
   "open": {
-              type: 'add',
-              entityType: 'Email',
-              data: {
-                  messageType: 'normal',
-                  from: {
-                      id: 6,
-                      label: "Simon Willcox"
+              "type": "add",
+              "entityType": "Email",
+              "data": {
+                  "messageType": "normal",
+                  "from": {
+                      "id": 6,
+                      "label": "Simon Willcox"
                   },
-                  to: [{
-                          id: 39,
-                          toEntityType: 'Candidate',
-                          email: "si.willcox@gmail.com"
+                  "to": [{
+                          "id": 39,
+                          "toEntityType": "Candidate",
+                          "email": "si.willcox@gmail.com"
                       }],
-                  subject: "Welcome!",
-                  message: "Auto generated message!",
-                 
+                  "subject": "Welcome!",
+                  "message": "Auto generated message!",
               }
           }
 }
