@@ -1,4 +1,10 @@
 {
   "total": 4,
-  "route": ["./activity", { "section": "tasks" }]
+  "route": [
+    "custom",
+    {
+        "name": "Test Tab",
+        "url": "https%3A%2F%2Frest91.bullhornstaffing.com%2Frest-services%2F407c3d%2Fservices%2FCustomComponent%2Fredirect%3FentityType%3DCandidate%26componentType%3Dtab%26componentID%3D7"
+    }
+  ]
 }
