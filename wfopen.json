@@ -1,4 +1,8 @@
 {
   "total": 5,
-  "open": {}
+  "open": {
+              "type": "ClientContact",
+              "keywords": "",
+              "criteria": "",
+          }
 }
