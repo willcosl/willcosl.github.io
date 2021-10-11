@@ -26,7 +26,7 @@
 function getUserDetails(){
     //Call the "requestDat" listener in BH via postRobot (in BH this is called AppBridge)
     postRobot.sendToParent('requestData', {
-            type: 'user'
+            type: 'all'
         }).then(function (userdata) {
             //Put what you want to do with the data here...
             console.log('[No-App] - Get User Complete', userdata);
