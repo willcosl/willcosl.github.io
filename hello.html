@@ -36,7 +36,7 @@ function getUserDetails(){
 }
 function callBack(){
     //Call the "requestDat" listener in BH via postRobot (in BH this is called AppBridge)
-    postRobot.sendToParent('callBack', {
+    postRobot.sendToParent('callback', {
             callingChannelID: 'ActionsWnd',
 	    key:"getFormData",
 	    options: {}
