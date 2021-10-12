@@ -21,6 +21,7 @@
     }).then(function (event) {
         console.log('[No-App] - Register Complete', event);
         getUserDetails();
+	callBack();
     });
 
 function getUserDetails(){
@@ -33,6 +34,19 @@ function getUserDetails(){
             document.getElementById('un').innerText = userdata.data.data.username;
         });
 }
+function callBack(){
+    //Call the "requestDat" listener in BH via postRobot (in BH this is called AppBridge)
+    postRobot.sendToParent('callBack', {
+            callingChannelID: 'ActionsWnd',
+	    key:"getFormData",
+	    options: {}
+        }).then(function (response) {
+            //Put what you want to do with the data here...
+            console.log(response);
+        });
+}		
+		
+		
 	</script>
 </body>
 
