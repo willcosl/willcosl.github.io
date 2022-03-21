@@ -9,6 +9,11 @@
 <body>
 
 	<h1>Hello <span id="un"></span></h1>
+	<form action="#" onsubmit="return callBack(this);>
+		<input type=text id=name></input>
+		<input type=submit></input>
+	</form>
+	
 	<script>
 		//postRobot is the JS object instantiated to make calls to the BH app hosting the iFrame
     postRobot.CONFIG.LOG_LEVEL = 'info';
@@ -21,7 +26,7 @@
     }).then(function (event) {
         console.log('[REMOTE] Register Complete', event);
         getUserDetails();
-	callBack();
+	//callBack();
     });
 
 function getUserDetails(){
@@ -35,18 +40,19 @@ function getUserDetails(){
             document.getElementById('un').innerText = userdata.data.data.username;
         });
 }
-function callBack(){
+function callBack( data ){
 	console.log('[REMOTE] Attempting callback');
     //Call the "requestDat" listener in BH via postRobot (in BH this is called AppBridge)
     postRobot.sendToParent('callback', {
             callingChannelID: 'ActionsWnd',
 	    key:"CUSTOM_MESSAGE",
 	    generic: true,
-	    options: {}
+	    options: data
         }).then(function (response) {
             //Put what you want to do with the data here...
             console.log('[REMOTE] response from callback',response);
         });
+    //postRobot.sendToParent('close', {});
 }		
 		
 		
