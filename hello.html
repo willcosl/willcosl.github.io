@@ -48,7 +48,9 @@ function callBack( data ){
 	    key:"CUSTOM_MESSAGE",
 	    generic: true,
 	    options: {},
-	    data: (name: data.name.value)
+	    data: {
+		    name: data.name.value
+	    }
         }).then(function (response) {
             //Put what you want to do with the data here...
             console.log('[REMOTE] response from callback',response);
