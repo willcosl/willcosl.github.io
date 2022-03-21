@@ -11,7 +11,7 @@
 	<h1>Hello <span id="un"></span></h1>
 	<script>
 		//postRobot is the JS object instantiated to make calls to the BH app hosting the iFrame
-    postRobot.CONFIG.LOG_LEVEL = 'error';
+    postRobot.CONFIG.LOG_LEVEL = 'info';
 
     //Register the "Post Robot" so we can make calls to BH
     postRobot.sendToParent('register', {
@@ -19,22 +19,24 @@
         url: window.location.href,
         color: 'green'
     }).then(function (event) {
-        console.log('[No-App] - Register Complete', event);
+        console.log('[REMOTE] Register Complete', event);
         getUserDetails();
 	callBack();
     });
 
 function getUserDetails(){
+	console.log('[REMOTE] Getting user details');
     //Call the "requestDat" listener in BH via postRobot (in BH this is called AppBridge)
     postRobot.sendToParent('requestData', {
             type: 'all'
         }).then(function (userdata) {
             //Put what you want to do with the data here...
-            console.log('[No-App] - Get User Complete', userdata);
+            console.log('[REMOTE] Get User Complete', userdata);
             document.getElementById('un').innerText = userdata.data.data.username;
         });
 }
 function callBack(){
+	console.log('[REMOTE] Attempting callback');
     //Call the "requestDat" listener in BH via postRobot (in BH this is called AppBridge)
     postRobot.sendToParent('callback', {
             callingChannelID: 'ActionsWnd',
@@ -42,7 +44,7 @@ function callBack(){
 	    options: {}
         }).then(function (response) {
             //Put what you want to do with the data here...
-            console.log(response);
+            console.log('[REMOTE] response from callback',response);
         });
 }		
 		
