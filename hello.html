@@ -38,7 +38,7 @@ function callBack(){
     //Call the "requestDat" listener in BH via postRobot (in BH this is called AppBridge)
     postRobot.sendToParent('callback', {
             callingChannelID: 'ActionsWnd',
-	    key:"getFormData",
+	    key:"CUSTOM_MESSAGE",
 	    options: {}
         }).then(function (response) {
             //Put what you want to do with the data here...
