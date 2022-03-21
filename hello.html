@@ -47,12 +47,14 @@ function callBack( data ){
             callingChannelID: 'ActionsWnd',
 	    key:"CUSTOM_MESSAGE",
 	    generic: true,
-	    options: {name: data.name.value}
+	    options: {},
+	    data: (name: data.name.value)
         }).then(function (response) {
             //Put what you want to do with the data here...
             console.log('[REMOTE] response from callback',response);
         });
-    //postRobot.sendToParent('close', {});
+	postRobot.sendToParent('close');
+     return false;
 }		
 		
 		
