@@ -37,7 +37,6 @@ function getUserDetails(){
 }
 function callBack(){
 	console.log('[REMOTE] Attempting callback');
-	const message = { key: GenericCallbackKeys.FILE, generic: true };
     //Call the "requestDat" listener in BH via postRobot (in BH this is called AppBridge)
     postRobot.sendToParent('callback', {
             callingChannelID: 'ActionsWnd',
