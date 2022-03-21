@@ -52,8 +52,8 @@ function callBack( data ){
         }).then(function (response) {
             //Put what you want to do with the data here...
             console.log('[REMOTE] response from callback',response);
+	    postRobot.sendToParent('close');
         });
-	postRobot.sendToParent('close');
      return false;
 }		
 		
