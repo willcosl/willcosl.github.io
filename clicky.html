@@ -24,12 +24,12 @@
         
 
         function assignLocation(){
-            let url = extensionUrl + '?EntityType=' + EntityType + '&EntityID=' + EntityID + '&authCode' + authCode;
+            let url = extensionUrl + '?EntityType=' + EntityType + '&EntityID=' + EntityID + '&authCode' + encodeURIComponent(authCode);
             console.log('opening...', url);
             window.location.assign(url);
         }
         function openCustom() {
-            let url = extensionUrl + '?EntityType=' + EntityType + '&EntityID=' + EntityID + '&authCode' + authCode;
+            let url = extensionUrl + '?EntityType=' + EntityType + '&EntityID=' + EntityID + '&authCode' + encodeURIComponent(authCode);
             console.log('opening...', url);
             postRobot.sendToParent("open", {
                 type: "custom",
