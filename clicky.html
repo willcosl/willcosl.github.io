@@ -20,16 +20,19 @@
         const EntityID = getQueryStringParameter(window.location.href,"EntityID");
         const authCode = getQueryStringParameter(window.location.href,"authCode");
         const EntityType = getQueryStringParameter(window.location.href,"EntityType");
+        const qs = window.location.search;
         const extensionUrl = 'https://manpower-france-extensions-dev.s3.amazonaws.com/#/action-vente-push';
         
 
         function assignLocation(){
             let url = extensionUrl + '?EntityType=' + EntityType + '&EntityID=' + EntityID + '&authCode' + encodeURIComponent(authCode);
+            url = extensionUrl + qs;
             console.log('opening...', url);
             window.location.assign(url);
         }
         function openCustom() {
             let url = extensionUrl + '?EntityType=' + EntityType + '&EntityID=' + EntityID + '&authCode' + encodeURIComponent(authCode);
+            url = extensionUrl + qs;
             console.log('opening...', url);
             postRobot.sendToParent("open", {
                 type: "custom",
