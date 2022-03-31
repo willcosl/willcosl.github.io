@@ -33,7 +33,7 @@
             }).then(function (response) {
                 //Put what you want to do with the data here...
                 console.log('[REMOTE] Get User Complete', response);
-                document.getElementById('sig').innerText = response.data.data.messageText;
+                document.getElementById('sig').innerText = response.data.data.data.forEach( sig => {sig.messageText + '<br/>'} );
             });
         };
     </script>
