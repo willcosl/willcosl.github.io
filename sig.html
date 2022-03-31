@@ -29,7 +29,7 @@
             console.log('[REMOTE] Getting signature');
             //Call the "requestDat" listener in BH via postRobot (in BH this is called AppBridge)
             postRobot.sendToParent('httpGET', {
-                relativeURL: '/query/MessageTemplate?where=templateType="SIGNATURE" and owner.id = 6&fields=*'
+                relativeURL: '/query/MessageTemplate?where=templateType=\'SIGNATURE\' and owner.id = 6&fields=*'
             }).then(function (response) {
                 //Put what you want to do with the data here...
                 console.log('[REMOTE] Get User Complete', response);
