@@ -28,7 +28,7 @@
         function getSig() {
             console.log('[REMOTE] Getting signature');
             //Call the "requestDat" listener in BH via postRobot (in BH this is called AppBridge)
-            postRobot.sendToParent('HTTP', {
+            postRobot.sendToParent('http', {
                 verb: 'get',
                 relativeURL: '/query/MessageTemplate?where=templateType="SIGNATURE" and owner.id = 6&fields=*'
             }).then(function (response) {
