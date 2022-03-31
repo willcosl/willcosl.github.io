@@ -25,10 +25,12 @@
 
         function assignLocation(){
             let url = extensionUrl + '?EntityType=' + EntityType + '&EntityID=' + EntityID + '&authCode' + authCode;
+            console.log('opening...', url);
             window.location.assign('https://manpower-france-extensions-dev.s3.amazonaws.com/#/action-vente-push?EntityType=Candidate&EntityID=350');
         }
         function openCustom() {
             let url = extensionUrl + '?EntityType=' + EntityType + '&EntityID=' + EntityID + '&authCode' + authCode;
+            console.log('opening...', url);
             postRobot.sendToParent("open", {
                 type: "custom",
                 data: {
