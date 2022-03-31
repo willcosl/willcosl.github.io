@@ -2,63 +2,73 @@
 <html>
 
 <head>
-	<base target="_top">
-      <!--External Library that allows the "posting" of messages from the page in the iFrame to "listeners" in Bullhorn -->
+    <base target="_top">
+    <!--External Library that allows the "posting" of messages from the page in the iFrame to "listeners" in Bullhorn -->
     <script src="https://cdn.rawgit.com/krakenjs/post-robot/7da06445/dist/post-robot.js"></script>
-	<script>
-	function addResizeParameterToUrl()
-{
-    var size = document.body.scrollHeight;
-    var currentHref = decodeURIComponent(getQueryStringParameter(location.href,
-       "currentBullhornUrl").replace(/\+/g, " ")).replace(/:[0-9]+/g, "");
-    var fragment="displayHeight=" + size;
-    currentHref+="#" + fragment;
-    parent.location.href=currentHref;
-}
-function getQueryStringParameter(href, paramName)
-{
-   var regexS = "[\\?&]"+ paramName +"=([^&#]*)";
-   var regex = new RegExp( regexS );
-   var results = regex.exec( href);
-   if( results == null )
-	{
-	   return "";
-        } else {
-	   return results[1];
-	}
-}
-	</script>
+    <script>
+        function getQueryStringParameter(href, paramName) {
+            var regexS = "[\\?&]" + paramName + "=([^&#]*)";
+            var regex = new RegExp(regexS);
+            var results = regex.exec(href);
+            if (results == null) {
+                return "";
+            } else {
+                return results[1];
+            }
+        }
+
+        const EntityID = getQueryStringParameter(window.location.href,"EntityID");
+        const authCode = getQueryStringParameter(window.location.href,"authCode");
+        const EntityType = getQueryStringParameter(window.location.href,"EntityType");
+        const extensionUrl = 'https://manpower-france-extensions-dev.s3.amazonaws.com/#/action-vente-push';
+        
+
+        function assignLocation(){
+            let url = extensionUrl + '?EntityType=' + EntityType + '&EntityID=' + EntityID + '&authCode' + authCode;
+            window.location.assign('https://manpower-france-extensions-dev.s3.amazonaws.com/#/action-vente-push?EntityType=Candidate&EntityID=350');
+        }
+        function openCustom() {
+            let url = extensionUrl + '?EntityType=' + EntityType + '&EntityID=' + EntityID + '&authCode' + authCode;
+            postRobot.sendToParent("open", {
+                type: "custom",
+                data: {
+                    title: "Finding contacts....",
+                    url: url,
+                }
+            });
+        }
+    </script>
 </head>
 
-<body onresize="addResizeParameterToUrl();" onload="addResizeParameterToUrl();">
+<body>
+    <h1>Hello <span id="un"></span></h1>
+    <button type="button" onclick="assignLocation();">Click to Open Here</button>
+    <button type="button" onclick="openCustom();">Click to Open in New Window</button>
+    <script>
+            //postRobot is the JS object instantiated to make calls to the BH app hosting the iFrame
+            postRobot.CONFIG.LOG_LEVEL = 'error';
 
-	<h1>Hello <span id="un"></span></h1>
-  <button type="button" onclick="window.location.assign('https://manpower-france-extensions-dev.s3.amazonaws.com/#/action-vente-push?EntityType=Candidate&EntityID=350');">Clicky Ici!</button>
-	<script>
-		//postRobot is the JS object instantiated to make calls to the BH app hosting the iFrame
-    postRobot.CONFIG.LOG_LEVEL = 'error';
+            //Register the "Post Robot" so we can make calls to BH
+            postRobot.sendToParent('register', {
+                title: 'Custom Title',
+                url: window.location.href,
+                color: 'red'
+            }).then(function (event) {
+                console.log('[No-App] - Register Complete', event);
+                getUserDetails();
+            });
 
-    //Register the "Post Robot" so we can make calls to BH
-    postRobot.sendToParent('register', {
-        title: 'Custom Title',
-        url: window.location.href,
-        color: 'red'
-    }).then(function (event) {
-        console.log('[No-App] - Register Complete', event);
-        getUserDetails();
-    });
-
-function getUserDetails(){
-    //Call the "requestDat" listener in BH via postRobot (in BH this is called AppBridge)
-    postRobot.sendToParent('requestData', {
-            type: 'user'
-        }).then(function (userdata) {
-            //Put what you want to do with the data here...
-            console.log('[No-App] - Get User Complete', userdata);
-            document.getElementById('un').innerText = userdata.data.data.username;
-        });
-}
-	</script>
+            function getUserDetails() {
+                //Call the "requestDat" listener in BH via postRobot (in BH this is called AppBridge)
+                postRobot.sendToParent('requestData', {
+                    type: 'user'
+                }).then(function (userdata) {
+                    //Put what you want to do with the data here...
+                    console.log('[No-App] - Get User Complete', userdata);
+                    document.getElementById('un').innerText = userdata.data.data.username;
+                });
+            }
+    </script>
 </body>
 
 </html>
