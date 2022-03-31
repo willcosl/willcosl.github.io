@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--External Library that allows the "posting" of messages from the page in the iFrame to "listeners" in Bullhorn -->
+    <script src="https://cdn.rawgit.com/krakenjs/post-robot/7da06445/dist/post-robot.js"></script>
+</head>
+
+<body>
+
+    <h1>Your Signature be</h1>
+    <span id="sig"></span>
+
+    <script>
+        //postRobot is the JS object instantiated to make calls to the BH app hosting the iFrame
+        postRobot.CONFIG.LOG_LEVEL = 'info';
+
+        //Register the "Post Robot" so we can make calls to BH
+        postRobot.sendToParent('register', {
+            title: 'Signature',
+            url: window.location.href,
+            color: 'green'
+        }).then(function (event) {
+            console.log('[REMOTE] Register Complete', event);
+            getSig();
+        });
+
+        function getSig() {
+            console.log('[REMOTE] Getting signature');
+            //Call the "requestDat" listener in BH via postRobot (in BH this is called AppBridge)
+            postRobot.sendToParent('GET', {
+                verb: 'get',
+                relativeURL: '/query/MessageTemplate?where=templateType="SIGNATURE" and owner.id = 6&fields=*'
+            }).then(function (response) {
+                //Put what you want to do with the data here...
+                console.log('[REMOTE] Get User Complete', response);
+                document.getElementById('sig').innerText = response.data.data.body;
+            });
+        };
+    </script>
+</body>
+
+</html>
