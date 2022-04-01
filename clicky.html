@@ -26,13 +26,13 @@
         
 
         function assignLocation(){
-            let url = extensionUrl + '?EntityType=' + EntityType + '&EntityID=' + EntityID + '&authCode' + encodeURIComponent(authCode);
+            let url = extensionUrl + '?EntityType=' + EntityType + '&EntityID=' + EntityID; //+ '&authCode' + encodeURIComponent(authCode);
             url = extensionUrl + qs;
             console.log('opening...', url);
             window.location.assign(url);
         }
         function openCustom() {
-            let url = extensionUrl + '?EntityType=' + EntityType + '&EntityID=' + EntityID + '&authCode' + encodeURIComponent(authCode);
+            let url = extensionUrl + '?EntityType=' + EntityType + '&EntityID=' + EntityID;// + '&authCode' + encodeURIComponent(authCode);
             url = extensionUrl + qs;
             console.log('opening...', url);
             postRobot.sendToParent("open", {
