@@ -59,12 +59,11 @@
             return false;
         }
 
-        postRobot.on('showResult', function (event) {
+        postRobot.on('customEvent', (event) => {
             console.log('[REMOTE] Received SEND from FI', event);
-            document.getElementById('un').innerText = ' - changed name to ' + event.name;
-            return {
-                ack: 'succsess',
-            };
+            if(event.event == "callRemote"){
+                document.getElementById('un').innerText = ' - changed name to ' + event.name;
+            }
         });
     </script>
 </body>
