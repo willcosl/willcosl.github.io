@@ -45,11 +45,9 @@
         function getFormData() {
             console.log('[REMOTE] Attempting to get FORM Data...');
             //Call the "requestDat" listener in BH via postRobot (in BH this is called AppBridge)
-            postRobot.sendToParent('callback', {
-                callingChannelID: 'ActionsWnd',
-                key: "REQUEST_FORM_DATA",
-                generic: true,
-                options: {}
+            postRobot.sendToParent('customEvent', {
+                event: "REQUEST_FORM_DATA",
+                data: {}
             }).then(function (response) {
                 //Put what you want to do with the data here...
                 console.log('[REMOTE] ... got form data', response);
@@ -72,9 +70,9 @@
             return false;
         }
 
-        postRobot.on('customEvent', (event) => {
+        postRobot.on('customEvent', (message) => {
             console.log('[REMOTE] Received SEND from FI', event);
-            if(event.event == "SEND_FORM"){
+            if(message.event == "SEND_FORM"){
                 document.getElementById('un').innerText = ' - changed name to ' + data.form.lastName;
             }
         });
