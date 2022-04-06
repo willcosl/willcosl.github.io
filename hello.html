@@ -39,7 +39,7 @@
             }).then(function (userdata) {
                 //Put what you want to do with the data here...
                 console.log('[REMOTE] Get User Complete', userdata);
-                document.getElementById('un').innerText = userdata.data.data.username;
+                document.getElementById('un').innerText = userdata.data.data.user.username;
             });
         }
         function getFormData() {
