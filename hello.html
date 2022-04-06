@@ -17,7 +17,7 @@
     <script>
         //postRobot is the JS object instantiated to make calls to the BH app hosting the iFrame
         postRobot.CONFIG.LOG_LEVEL = 'info';
-
+        let windowName = '';
         //Register the "Post Robot" so we can make calls to BH
         postRobot.sendToParent('register', {
             title: 'Hello',
@@ -25,6 +25,7 @@
             color: 'green'
         }).then(function (event) {
             console.log('[REMOTE] Register Complete', event);
+            windowName = event.data.windowName
             getUserDetails();
             //callBack();
         });
@@ -48,6 +49,7 @@
                 key: "CUSTOM_MESSAGE",
                 generic: true,
                 options: {
+                    windowName: windowName,
                     name: data.name.value
                 }
             }).then(function (response) {
@@ -58,7 +60,7 @@
             return false;
         }
 
-        function registerListener() {
+        function registerListener(windowName) {
             postRobot.on('showResult', function (event) {
                 document.getElementById('un').innerText = ' - changed name to ' + event.name;
                 return {
