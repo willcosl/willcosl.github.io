@@ -59,11 +59,9 @@
         function callBack(data) {
             console.log('[REMOTE] Attempting callback to FI');
             //Call the "requestDat" listener in BH via postRobot (in BH this is called AppBridge)
-            postRobot.sendToParent('callback', {
-                callingChannelID: 'ActionsWnd',
-                key: "CUSTOM_MESSAGE",
-                generic: true,
-                options: {
+            postRobot.sendToParent('customEvent', {
+                event: "CUSTOM_MESSAGE",
+                data: {
                     windowName: windowName,
                     name: data.name.value
                 }
