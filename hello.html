@@ -16,7 +16,7 @@
 
     <script>
         //postRobot is the JS object instantiated to make calls to the BH app hosting the iFrame
-        postRobot.CONFIG.LOG_LEVEL = 'info';
+        postRobot.CONFIG.LOG_LEVEL = 'error';
         let windowName = '';
         //Register the "Post Robot" so we can make calls to BH
         postRobot.sendToParent('register', {
@@ -42,7 +42,7 @@
             });
         }
         function callBack(data) {
-            console.log('[REMOTE] Attempting callback');
+            console.log('[REMOTE] Attempting callback to FI');
             //Call the "requestDat" listener in BH via postRobot (in BH this is called AppBridge)
             postRobot.sendToParent('callback', {
                 callingChannelID: 'ActionsWnd',
@@ -54,21 +54,18 @@
                 }
             }).then(function (response) {
                 //Put what you want to do with the data here...
-                console.log('[REMOTE] response from callback', response);
-                postRobot.sendToParent('close');
+                console.log('[REMOTE] callback complete', response);
             });
             return false;
         }
 
-        function registerListener(windowName) {
-            postRobot.on('showResult', function (event) {
-                console.log('[REMOTE] Received name from FI', event);
-                document.getElementById('un').innerText = ' - changed name to ' + event.name;
-                return {
-                    ack: 'succsess',
-                };
-            });
-        }
+        postRobot.on('showResult', function (event) {
+            console.log('[REMOTE] Received SEND from FI', event);
+            document.getElementById('un').innerText = ' - changed name to ' + event.name;
+            return {
+                ack: 'succsess',
+            };
+        });
     </script>
 </body>
 
