@@ -2,64 +2,71 @@
 <html>
 
 <head>
-      <!--External Library that allows the "posting" of messages from the page in the iFrame to "listeners" in Bullhorn -->
+    <!--External Library that allows the "posting" of messages from the page in the iFrame to "listeners" in Bullhorn -->
     <script src="https://cdn.rawgit.com/krakenjs/post-robot/7da06445/dist/post-robot.js"></script>
 </head>
 
 <body>
 
-	<h1>Hello <span id="un"></span></h1>
-	<form action="#" onsubmit="return callBack(this);">
-		<input type="text" id="name"></input>
-		<input type="submit"></input>
-	</form>
-	
-	<script>
-		//postRobot is the JS object instantiated to make calls to the BH app hosting the iFrame
-    postRobot.CONFIG.LOG_LEVEL = 'info';
+    <h1>Hello <span id="un"></span></h1>
+    <form action="#" onsubmit="return callBack(this);">
+        <input type="text" id="name"></input>
+        <input type="submit"></input>
+    </form>
 
-    //Register the "Post Robot" so we can make calls to BH
-    postRobot.sendToParent('register', {
-        title: 'Hello',
-        url: window.location.href,
-        color: 'green'
-    }).then(function (event) {
-        console.log('[REMOTE] Register Complete', event);
-        getUserDetails();
-	//callBack();
-    });
+    <script>
+        //postRobot is the JS object instantiated to make calls to the BH app hosting the iFrame
+        postRobot.CONFIG.LOG_LEVEL = 'info';
 
-function getUserDetails(){
-	console.log('[REMOTE] Getting user details');
-    //Call the "requestDat" listener in BH via postRobot (in BH this is called AppBridge)
-    postRobot.sendToParent('requestData', {
-            type: 'all'
-        }).then(function (userdata) {
-            //Put what you want to do with the data here...
-            console.log('[REMOTE] Get User Complete', userdata);
-            document.getElementById('un').innerText = userdata.data.data.username;
+        //Register the "Post Robot" so we can make calls to BH
+        postRobot.sendToParent('register', {
+            title: 'Hello',
+            url: window.location.href,
+            color: 'green'
+        }).then(function (event) {
+            console.log('[REMOTE] Register Complete', event);
+            getUserDetails();
+            //callBack();
         });
-}
-function callBack( data ){
-	console.log('[REMOTE] Attempting callback');
-    //Call the "requestDat" listener in BH via postRobot (in BH this is called AppBridge)
-    postRobot.sendToParent('callback', {
-            callingChannelID: 'ActionsWnd',
-	    key:"CUSTOM_MESSAGE",
-	    generic: true,
-	    options: {
-		    name: data.name.value
-	    }
-        }).then(function (response) {
-            //Put what you want to do with the data here...
-            console.log('[REMOTE] response from callback',response);
-	    postRobot.sendToParent('close');
-        });
-     return false;
-}		
-		
-		
-	</script>
+
+        function getUserDetails() {
+            console.log('[REMOTE] Getting user details');
+            //Call the "requestDat" listener in BH via postRobot (in BH this is called AppBridge)
+            postRobot.sendToParent('requestData', {
+                type: 'all'
+            }).then(function (userdata) {
+                //Put what you want to do with the data here...
+                console.log('[REMOTE] Get User Complete', userdata);
+                document.getElementById('un').innerText = userdata.data.data.username;
+            });
+        }
+        function callBack(data) {
+            console.log('[REMOTE] Attempting callback');
+            //Call the "requestDat" listener in BH via postRobot (in BH this is called AppBridge)
+            postRobot.sendToParent('callback', {
+                callingChannelID: 'ActionsWnd',
+                key: "CUSTOM_MESSAGE",
+                generic: true,
+                options: {
+                    name: data.name.value
+                }
+            }).then(function (response) {
+                //Put what you want to do with the data here...
+                console.log('[REMOTE] response from callback', response);
+                postRobot.sendToParent('close');
+            });
+            return false;
+        }
+
+        function registerListener() {
+            postRobot.on('showResult', function (event) {
+                document.getElementById('un').innerText = ' - changed name to ' + event.name;
+                return {
+                    ack: 'succsess',
+                };
+            });
+        }
+    </script>
 </body>
 
 </html>
