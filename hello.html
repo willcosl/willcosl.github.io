@@ -71,7 +71,7 @@
         }
 
         postRobot.on('customEvent', (message) => {
-            console.log('[REMOTE] Received SEND from FI', event);
+            console.log('[REMOTE] Received SEND from FI', message);
             if(message.event == "SEND_FORM"){
                 document.getElementById('un').innerText = ' - changed name to ' + data.form.lastName;
             }
