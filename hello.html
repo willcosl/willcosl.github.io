@@ -62,6 +62,7 @@
 
         function registerListener(windowName) {
             postRobot.on('showResult', function (event) {
+                console.log('[REMOTE] Received name from FI', event);
                 document.getElementById('un').innerText = ' - changed name to ' + event.name;
                 return {
                     ack: 'succsess',
