@@ -41,6 +41,20 @@
                 document.getElementById('un').innerText = userdata.data.data.username;
             });
         }
+        function getFormData() {
+            console.log('[REMOTE] Attempting to get FORM Data...');
+            //Call the "requestDat" listener in BH via postRobot (in BH this is called AppBridge)
+            postRobot.sendToParent('callback', {
+                callingChannelID: 'ActionsWnd',
+                key: "REQUEST_FORM_DATA",
+                generic: true,
+                options: {}
+            }).then(function (response) {
+                //Put what you want to do with the data here...
+                console.log('[REMOTE] ... got form data', response);
+            });
+            return false;
+        }
         function callBack(data) {
             console.log('[REMOTE] Attempting callback to FI');
             //Call the "requestDat" listener in BH via postRobot (in BH this is called AppBridge)
@@ -61,7 +75,7 @@
 
         postRobot.on('customEvent', (event) => {
             console.log('[REMOTE] Received SEND from FI', event);
-            if(event.event == "callRemote"){
+            if(event.event == "SEND_FORM"){
                 document.getElementById('un').innerText = ' - changed name to ' + event.name;
             }
         });
