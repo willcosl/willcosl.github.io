@@ -28,9 +28,9 @@
 </head>
 
 <body>
-    <iframe id="container" src="https://app.bullhornstaffing.com" width='100%' height="90%"></iframe>
+    <iframe id="container" src="https://app.bullhornstaffing.com" width='100%' height="700"></iframe>
     <h1>Hello <span id="un"></span></h1>
-    <button type="button" onclick="getUser();">Get User</button>
+    <button type="button" onclick="popRecord();">Pop Record</button>
     <script>
         //postRobot is the JS object instantiated to make calls to the BH app hosting the iFrame
         postRobot.CONFIG.LOG_LEVEL = 'error';
@@ -54,6 +54,14 @@
                 //Put what you want to do with the data here...
                 console.log('[No-App] - Get User Complete', userdata);
                 alert(userdata.data.data.username);
+            });
+        }
+        function popRecord() {
+            //Call the "requestDat" listener in BH via postRobot (in BH this is called AppBridge)
+            postRobot.send(iframe, 'open', {
+                type: 'record',
+                entityType: 'Candidate',
+                entityId: '201'
             });
         }
     </script>
