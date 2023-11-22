@@ -6,7 +6,7 @@
     <!--External Library that allows the "posting" of messages from the page in the iFrame to "listeners" in Bullhorn -->
     <script src="https://cdn.rawgit.com/krakenjs/post-robot/7da06445/dist/post-robot.js"></script>
     <script>
-        function assignLocation(){
+        function assignLocation() {
             let url = extensionUrl + '?EntityType=' + EntityType + '&EntityID=' + EntityID; //+ '&authCode' + encodeURIComponent(authCode);
             url = extensionUrl + qs;
             console.log('opening...', url);
@@ -28,17 +28,16 @@
 </head>
 
 <body>
-  <iframe id="container" src="https://app.bullhornstaffing.com" width=100%></iframe>
+    <iframe id="container" src="https://app.bullhornstaffing.com" width=100%></iframe>
     <h1>Hello <span id="un"></span></h1>
-    <button type="button" onclick="assignLocation();">Click to Open Here</button>
-    <button type="button" onclick="openCustom();">Click to Open in New Window</button>
+    <button type="button" onclick="getUser();">Get User</button>
     <script>
-            //postRobot is the JS object instantiated to make calls to the BH app hosting the iFrame
-            postRobot.CONFIG.LOG_LEVEL = 'error';
-            const iframe = document.querySelector("iframe").contentWindow;
-
+        //postRobot is the JS object instantiated to make calls to the BH app hosting the iFrame
+        postRobot.CONFIG.LOG_LEVEL = 'error';
+        const iframe = document.querySelector("iframe").contentWindow;
+        function getUser() {
             //Register the "Post Robot" so we can make calls to BH
-            postRobot.sendToParent('register', {
+            postRobot.send(iframe, 'register', {
                 title: 'Custom Title',
                 url: window.location.href,
                 color: 'red'
@@ -46,17 +45,17 @@
                 console.log('[No-App] - Register Complete', event);
                 getUserDetails();
             });
-
-            function getUserDetails() {
-                //Call the "requestDat" listener in BH via postRobot (in BH this is called AppBridge)
-                postRobot.send(iframe, 'requestData', {
-                    type: 'user'
-                }).then(function (userdata) {
-                    //Put what you want to do with the data here...
-                    console.log('[No-App] - Get User Complete', userdata);
-                    alert(userdata.data.data.username);
-                });
-            }
+        }
+        function getUserDetails() {
+            //Call the "requestDat" listener in BH via postRobot (in BH this is called AppBridge)
+            postRobot.send(iframe, 'requestData', {
+                type: 'user'
+            }).then(function (userdata) {
+                //Put what you want to do with the data here...
+                console.log('[No-App] - Get User Complete', userdata);
+                alert(userdata.data.data.username);
+            });
+        }
     </script>
 </body>
 
