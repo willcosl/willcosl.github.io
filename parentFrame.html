@@ -35,6 +35,7 @@
     <script>
             //postRobot is the JS object instantiated to make calls to the BH app hosting the iFrame
             postRobot.CONFIG.LOG_LEVEL = 'error';
+            const iframe = document.querySelector("iframe").contentWindow;
 
             //Register the "Post Robot" so we can make calls to BH
             postRobot.sendToParent('register', {
@@ -48,16 +49,15 @@
 
             function getUserDetails() {
                 //Call the "requestDat" listener in BH via postRobot (in BH this is called AppBridge)
-                postRobot.sendToParent('requestData', {
+                postRobot.send(iframe, 'requestData', {
                     type: 'user'
                 }).then(function (userdata) {
                     //Put what you want to do with the data here...
                     console.log('[No-App] - Get User Complete', userdata);
-                    document.getElementById('un').innerText = userdata.data.data.username;
+                    alert(userdata.data.data.username);
                 });
             }
     </script>
-  <
 </body>
 
 </html>
