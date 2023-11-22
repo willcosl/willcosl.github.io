@@ -59,26 +59,6 @@
     </style>
     <!--External Library that allows the "posting" of messages from the page in the iFrame to "listeners" in Bullhorn -->
     <script src="https://cdn.rawgit.com/krakenjs/post-robot/7da06445/dist/post-robot.js"></script>
-    <script>
-        function assignLocation() {
-            let url = extensionUrl + '?EntityType=' + EntityType + '&EntityID=' + EntityID; //+ '&authCode' + encodeURIComponent(authCode);
-            url = extensionUrl + qs;
-            console.log('opening...', url);
-            window.location.assign(url);
-        }
-        function openCustom() {
-            let url = extensionUrl + '?EntityType=' + EntityType + '&EntityID=' + EntityID;// + '&authCode' + encodeURIComponent(authCode);
-            url = extensionUrl + qs;
-            console.log('opening...', url);
-            postRobot.sendToParent("open", {
-                type: "custom",
-                data: {
-                    title: "Finding contacts....",
-                    url: url,
-                }
-            });
-        }
-    </script>
 </head>
 
 <body>
@@ -94,8 +74,12 @@
 
     <script>
         //postRobot is the JS object instantiated to make calls to the BH app hosting the iFrame
-        postRobot.CONFIG.LOG_LEVEL = 'error';
+        postRobot.CONFIG.LOG_LEVEL = 'debug';
         const iframe = document.querySelector("iframe").contentWindow;
+        postRobot.on("register", function (event) {
+            return postRobot.send(iframe, 'register', event)
+        });
+
         function getUser() {
             //Register the "Post Robot" so we can make calls to BH
             postRobot.send(iframe, 'register', {
