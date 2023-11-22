@@ -3,29 +3,60 @@
 
 <head>
     <base target="_top">
-    <style type="text/css"> 
-        html { 
-            overflow: auto; 
-        } 
-          
-        html, 
-        body, 
-        div, 
-        iframe { 
-            margin: 0px; 
-            padding: 0px; 
-            height: 100%; 
-            border: none; 
-        } 
-          
-        iframe { 
-            display: block; 
-            width: 100%; 
-            border: none; 
-            overflow-y: auto; 
-            overflow-x: hidden; 
-        } 
-    </style> 
+    <style type="text/css">
+        html {
+            overflow: auto;
+        }
+
+        html,
+        body,
+        div,
+        iframe {
+            margin: 0px;
+            padding: 0px;
+            height: 100%;
+            border: none;
+        }
+
+        iframe {
+            display: block;
+            width: 100%;
+            border: none;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        /* The Modal (background) */
+        .modal {
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100;
+            /* Full width */
+            height: 100;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Black w/ opacity */
+        }
+
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            /* Could be more or less, depending on screen size */
+        }
+    </style>
     <!--External Library that allows the "posting" of messages from the page in the iFrame to "listeners" in Bullhorn -->
     <script src="https://cdn.rawgit.com/krakenjs/post-robot/7da06445/dist/post-robot.js"></script>
     <script>
@@ -51,9 +82,16 @@
 </head>
 
 <body>
-    <iframe id="container" src="https://app.bullhornstaffing.com" width='100%' height="700"></iframe>
-    <h1>Hello <span id="un"></span></h1>
-    <button type="button" onclick="popRecord();">Pop Record</button>
+    <iframe id="container" src="https://app.bullhornstaffing.com" frameborder="0" marginheight="0" marginwidth="0"
+        width="100%" height="100%" scrolling="auto"></iframe>
+    !-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <button type="button" onclick="popRecord();">Pop Record</button>
+        </div>
+    </div>
+
     <script>
         //postRobot is the JS object instantiated to make calls to the BH app hosting the iFrame
         postRobot.CONFIG.LOG_LEVEL = 'error';
